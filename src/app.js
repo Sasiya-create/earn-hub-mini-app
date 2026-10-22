@@ -1,13 +1,6 @@
 
 const tg = window.Telegram?.WebApp;
 
-if (tg) {
-  tg.ready();
-  tg.expand();
-  tg.setHeaderColor?.("#0b1020");
-  tg.setBackgroundColor?.("#0b1020");
-}
-
 const $ = (selector) => document.querySelector(selector);
 
 const pageDetails = {
@@ -32,62 +25,43 @@ const pageDetails = {
         <a class="action-link" href="https://t.me/earn_mini_pay"
            target="_blank" rel="noopener noreferrer">Open Channel ↗</a>
       </div>
-      <p class="notice">Task rewards become available after server-side verification is connected.</p>
+      <p class="notice">Task rewards will be enabled after server verification.</p>
     `
   },
   ads: {
     title: "Watch Ads",
     description: "Advertising rewards",
-    content: `
-      <div class="empty-icon">📺</div>
-      <p>Monetag ads will be configured here later.</p>
-      <p class="notice">Ad rewards are not enabled yet.</p>
-    `
+    content: "<p>Monetag Ads will be configured here later.</p>"
   },
   daily: {
     title: "Daily Reward",
     description: "Come back every day",
-    content: `
-      <div class="empty-icon">🎁</div>
-      <p>Daily rewards will be enabled after the secure API is connected.</p>
-    `
+    content: "<p>Daily rewards will be available after the reward API is implemented.</p>"
   },
   spin: {
     title: "Spin Wheel",
     description: "Your daily spin",
-    content: `
-      <div class="empty-icon">🎡</div>
-      <p>The spin feature will be connected to the database next.</p>
-    `
+    content: "<p>The daily spin will be connected to the secure backend.</p>"
   },
   referrals: {
     title: "Refer & Earn",
     description: "Invite friends to Earn Hub",
-    content: `
-      <div class="empty-icon">👥</div>
-      <p>Your personal referral link will appear here after the bot backend is connected.</p>
-    `
+    content: "<p>Your personal referral link will appear after the referral backend is ready.</p>"
   },
   leaderboard: {
     title: "Leaderboard",
     description: "Top earners",
-    content: `
-      <div class="empty-icon">🏆</div>
-      <p>The leaderboard will load verified balances from the database.</p>
-    `
+    content: "<p>The leaderboard will load verified results from the database.</p>"
   },
   withdraw: {
     title: "Withdraw",
     description: "Request a payout",
-    content: `
-      <div class="empty-icon">💳</div>
-      <p>Withdrawals will be enabled after balance checks and admin approval are implemented.</p>
-    `
+    content: "<p>Withdrawals will be enabled after secure balance checks and admin approval are implemented.</p>"
   },
   profile: {
     title: "Your Profile",
     description: "Telegram account",
-    content: `<p>Your account information will load after secure Telegram authentication is connected.</p>`
+    content: "<p>Loading profile...</p>"
   }
 };
 
@@ -102,9 +76,7 @@ function showPage(page) {
     button.classList.toggle("active", button.dataset.page === page);
   });
 
-  if (tg?.HapticFeedback) {
-    tg.HapticFeedback.selectionChanged();
-  }
+  tg?.HapticFeedback?.selectionChanged();
 }
 
 document.addEventListener("click", (event) => {
@@ -115,17 +87,54 @@ document.addEventListener("click", (event) => {
   showPage(button.dataset.page);
 });
 
-$("#profileButton")?.addEventListener("click", () => {
-  showPage("profile");
-});
+$("#profileButton")?.addEventListener("click", () => showPage("profile"));
 
-const telegramUser = tg?.initDataUnsafe?.user;
+async function initializeApp() {
+  if (!tg) {
+    $("#userName").textContent = "Guest";
+    $("#pageDescription").textContent =
+      "Open this Mini App through Telegram to sign in.";
+    return;
+  }
 
-if (telegramUser) {
-  const firstName = telegramUser.first_name || "User";
-  $("#userName").textContent = firstName;
-} else {
-  $("#userName").textContent = "Guest";
+  tg.ready();
+  tg.expand();
+  tg.setHeaderColor?.("#0b1020");
+  tg.setBackgroundColor?.("#0b1020");
+
+  const initData = tg.initData;
+
+  if (!initData) {
+    $("#userName").textContent = "Guest";
+    $("#pageDescription").textContent =
+      "Please open Earn Hub using the Telegram bot.";
+    return;
+  }
+
+  try {
+    const response = await fetch("/.netlify/functions/api", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ initData })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.ok) {
+      throw new Error(result.error || "Authentication failed");
+    }
+
+    $("#userName").textContent = result.user.first_name || "User";
+    $("#balance").textContent =
+      "$" + Number(result.balance).toFixed(4);
+
+    $("#pageDescription").textContent = "Your account is connected.";
+  } catch (error) {
+    console.error("Initialization failed:", error);
+    $("#pageDescription").textContent =
+      "Unable to connect right now. Please try again later.";
+  }
 }
 
 showPage("home");
+initializeApp();
