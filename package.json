@@ -1,0 +1,13 @@
+
+{
+  "name": "earn-hub-mini-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo Build complete"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
+  }
+}
