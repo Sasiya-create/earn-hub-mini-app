@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <title>Earn Hub</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">E</div>
+        <div>
+          <h1>Earn Hub</h1>
+          <p>Complete tasks. Earn rewards.</p>
+        </div>
+      </div>
+      <button class="avatar" id="profileButton" aria-label="Profile">👤</button>
+    </header>
+
+    <main>
+      <section class="welcome">
+        <p class="muted">WELCOME BACK</p>
+        <h2>Hello, <span id="userName">Guest</span> 👋</h2>
+        <p>Start earning your rewards today.</p>
+      </section>
+
+      <section class="balance-card">
+        <div class="balance-heading">
+          <span>💰 Total Balance</span>
+          <span class="live-label">● YOUR WALLET</span>
+        </div>
+        <div class="balance" id="balance">$0.0000</div>
+        <p>Your Earn Hub balance</p>
+        <div class="balance-actions">
+          <button class="primary-btn" data-page="withdraw">Withdraw ↗</button>
+          <button class="secondary-btn" data-page="referrals">Invite Friends</button>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <span>📋</span>
+          <p>Completed Tasks</p>
+          <strong id="tasksCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span>👥</span>
+          <p>Referrals</p>
+          <strong id="referralsCount">0</strong>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <h2>Earn More</h2>
+            <p>Choose how you want to earn</p>
+          </div>
+        </div>
+
+        <div class="feature-list">
+          <button class="feature-card" data-page="tasks">
+            <span class="feature-icon purple">📋</span>
+            <span class="feature-copy">
+              <strong>Daily Tasks</strong>
+              <small>Complete tasks and earn coins</small>
+            </span>
+            <span class="arrow">›</span>
+          </button>
+
+          <button class="feature-card" data-page="ads">
+            <span class="feature-icon orange">▶️</span>
+            <span class="feature-copy">
+              <strong>Watch Ads</strong>
+              <small>Explore available ad rewards</small>
+            </span>
+            <span class="arrow">›</span>
+          </button>
+
+          <button class="feature-card" data-page="daily">
+            <span class="feature-icon green">🎁</span>
+            <span class="feature-copy">
+              <strong>Daily Reward</strong>
+              <small>Claim your daily bonus</small>
+            </span>
+            <span class="arrow">›</span>
+          </button>
+
+          <button class="feature-card" data-page="spin">
+            <span class="feature-icon pink">🎡</span>
+            <span class="feature-copy">
+              <strong>Spin Wheel</strong>
+              <small>Try your daily spin</small>
+            </span>
+            <span class="arrow">›</span>
+          </button>
+
+          <button class="feature-card" data-page="referrals">
+            <span class="feature-icon blue">👥</span>
+            <span class="feature-copy">
+              <strong>Refer & Earn</strong>
+              <small>Invite friends to Earn Hub</small>
+            </span>
+            <span class="arrow">›</span>
+          </button>
+
+          <button class="feature-card" data-page="leaderboard">
+            <span class="feature-icon yellow">🏆</span>
+            <span class="feature-copy">
+              <strong>Leaderboard</strong>
+              <small>See the top earners</small>
+            </span>
+            <span class="arrow">›</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <h2 id="pageTitle">Explore Earn Hub</h2>
+            <p id="pageDescription">Choose a feature above to get started.</p>
+          </div>
+        </div>
+        <div id="pageContent" class="content-panel">
+          <div class="empty-icon">✨</div>
+          <p>Your earning journey starts here.</p>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="nav-item active" data-page="home">
+        <span>⌂</span><small>Home</small>
+      </button>
+      <button class="nav-item" data-page="tasks">
+        <span>▤</span><small>Tasks</small>
+      </button>
+      <button class="nav-item" data-page="referrals">
+        <span>♧</span><small>Refer</small>
+      </button>
+      <button class="nav-item" data-page="withdraw">
+        <span>↗</span><small>Withdraw</small>
+      </button>
+    </nav>
+  </div>
+
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
