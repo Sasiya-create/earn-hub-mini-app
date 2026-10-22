@@ -360,3 +360,33 @@ button:focus-visible {
     padding-left: 22px;
   }
 }
+
+
+.task-item {
+  width: 100%;
+  margin: 6px 0;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel-light);
+  text-align: left;
+}
+
+.task-item p {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.action-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #c4b5fd;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.notice {
+  margin-top: 14px !important;
+  font-size: 11px;
+  line-height: 1.6;
+}
