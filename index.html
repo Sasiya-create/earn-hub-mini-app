@@ -3,155 +3,216 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b1020">
-  <title>Earn Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#fffaf6">
+  <title>TaskFlow - Earn Rewards</title>
 
+  <link rel="stylesheet" href="style.css">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-  <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-icon">E</div>
-        <div>
-          <h1>Earn Hub</h1>
-          <p>Complete tasks. Earn rewards.</p>
-        </div>
-      </div>
-      <button class="avatar" id="profileButton" aria-label="Profile">👤</button>
-    </header>
+  <header class="top">
+    <div class="logo">T</div>
+    <div class="brand">
+      <h2>TaskFlow</h2>
+      <p>Task &amp; Earn</p>
+    </div>
+    <div class="status">● Online</div>
+  </header>
 
-    <main>
-      <section class="welcome">
-        <p class="muted">WELCOME BACK</p>
-        <h2>Hello, <span id="userName">Guest</span> 👋</h2>
-        <p>Start earning your rewards today.</p>
-      </section>
-
-      <section class="balance-card">
-        <div class="balance-heading">
-          <span>💰 Total Balance</span>
-          <span class="live-label">● YOUR WALLET</span>
-        </div>
-        <div class="balance" id="balance">$0.0000</div>
-        <p>Your Earn Hub balance</p>
-        <div class="balance-actions">
-          <button class="primary-btn" data-page="withdraw">Withdraw ↗</button>
-          <button class="secondary-btn" data-page="referrals">Invite Friends</button>
-        </div>
-      </section>
-
-      <section class="stats-grid">
-        <div class="stat-card">
-          <span>📋</span>
-          <p>Completed Tasks</p>
-          <strong id="tasksCount">0</strong>
-        </div>
-        <div class="stat-card">
-          <span>👥</span>
-          <p>Referrals</p>
-          <strong id="referralsCount">0</strong>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-heading">
-          <div>
-            <h2>Earn More</h2>
-            <p>Choose how you want to earn</p>
-          </div>
-        </div>
-
-        <div class="feature-list">
-          <button class="feature-card" data-page="tasks">
-            <span class="feature-icon purple">📋</span>
-            <span class="feature-copy">
-              <strong>Daily Tasks</strong>
-              <small>Complete tasks and earn coins</small>
-            </span>
-            <span class="arrow">›</span>
-          </button>
-
-          <button class="feature-card" data-page="ads">
-            <span class="feature-icon orange">▶️</span>
-            <span class="feature-copy">
-              <strong>Watch Ads</strong>
-              <small>Explore available ad rewards</small>
-            </span>
-            <span class="arrow">›</span>
-          </button>
-
-          <button class="feature-card" data-page="daily">
-            <span class="feature-icon green">🎁</span>
-            <span class="feature-copy">
-              <strong>Daily Reward</strong>
-              <small>Claim your daily bonus</small>
-            </span>
-            <span class="arrow">›</span>
-          </button>
-
-          <button class="feature-card" data-page="spin">
-            <span class="feature-icon pink">🎡</span>
-            <span class="feature-copy">
-              <strong>Spin Wheel</strong>
-              <small>Try your daily spin</small>
-            </span>
-            <span class="arrow">›</span>
-          </button>
-
-          <button class="feature-card" data-page="referrals">
-            <span class="feature-icon blue">👥</span>
-            <span class="feature-copy">
-              <strong>Refer & Earn</strong>
-              <small>Invite friends to Earn Hub</small>
-            </span>
-            <span class="arrow">›</span>
-          </button>
-
-          <button class="feature-card" data-page="leaderboard">
-            <span class="feature-icon yellow">🏆</span>
-            <span class="feature-copy">
-              <strong>Leaderboard</strong>
-              <small>See the top earners</small>
-            </span>
-            <span class="arrow">›</span>
-          </button>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-heading">
-          <div>
-            <h2 id="pageTitle">Explore Earn Hub</h2>
-            <p id="pageDescription">Choose a feature above to get started.</p>
-          </div>
-        </div>
-        <div id="pageContent" class="content-panel">
-          <div class="empty-icon">✨</div>
-          <p>Your earning journey starts here.</p>
-        </div>
-      </section>
-    </main>
-
-    <nav class="bottom-nav" aria-label="Main navigation">
-      <button class="nav-item active" data-page="home">
-        <span>⌂</span><small>Home</small>
-      </button>
-      <button class="nav-item" data-page="tasks">
-        <span>▤</span><small>Tasks</small>
-      </button>
-      <button class="nav-item" data-page="referrals">
-        <span>♧</span><small>Refer</small>
-      </button>
-      <button class="nav-item" data-page="withdraw">
-        <span>↗</span><small>Withdraw</small>
-      </button>
-    </nav>
+  <div class="balance-bar">
+    <div>
+      <span class="balance-label">My Balance</span>
+      <strong id="balance">$0.00</strong>
+    </div>
+    <span class="demo-note" id="balanceLabel">Connecting...</span>
   </div>
 
-  <script type="module" src="src/app.js"></script>
+  <p id="verificationStatus" class="verification-status" role="status">
+    Connecting to Telegram...
+  </p>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="page">
+      <div class="info-card">
+        <h2>Welcome to TaskFlow!</h2>
+        <p>Complete available tasks and earn rewards.</p>
+        <p id="welcomeMessage">Connect through Telegram to get started.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Quick Access</h3>
+        <button class="primary" type="button" onclick="showPage('tasks')">
+          View Tasks
+        </button>
+        <button class="primary" type="button" onclick="showPage('profile')">
+          My Profile
+        </button>
+      </div>
+
+      <div class="info-card">
+        <h3>How it works</h3>
+        <p>1. Open available tasks.</p>
+        <p>2. Complete tasks according to their instructions.</p>
+        <p>3. Rewards are credited only after server-side verification.</p>
+      </div>
+    </section>
+
+    <!-- REFERRAL -->
+    <section id="referral" class="page hidden">
+      <h2>Refer &amp; Earn</h2>
+
+      <div class="info-card">
+        <h3>Referral Reward</h3>
+        <p>Advertised reward: $0.02 per eligible referral.</p>
+        <p id="referralStatus">
+          Referral tracking is not connected yet.
+        </p>
+        <p id="referralLink">Your referral link will appear here when enabled.</p>
+        <button class="primary" type="button" onclick="copyReferralLink()">
+          Copy Referral Link
+        </button>
+      </div>
+    </section>
+
+    <!-- TASKS -->
+    <section id="tasks" class="page hidden">
+      <h2>Available Tasks</h2>
+
+      <div id="taskList" class="info-card">
+        <p>Tasks will appear here after the tasks API is connected.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Have your own task?</h3>
+        <p>Submit a task request for admin review.</p>
+        <button class="primary" type="button" onclick="showPage('addtask')">
+          Add Your Task
+        </button>
+      </div>
+    </section>
+
+    <!-- ADD TASK -->
+    <section id="addtask" class="page hidden">
+      <h2>Add Your Task</h2>
+
+      <div class="info-card">
+        <p>Fee: $4 for up to 2,000 members.</p>
+        <p>Fee: $6 for more than 2,000 members.</p>
+        <p>Final fees must be calculated by the server.</p>
+        <p>Task submissions and payment verification require the backend API.</p>
+      </div>
+
+      <form id="addTaskForm">
+        <div class="info-card">
+          <label for="taskTitle">Task title</label>
+          <input id="taskTitle" name="title" maxlength="150" required>
+
+          <label for="taskDescription">Description</label>
+          <textarea id="taskDescription" name="description" maxlength="2000"></textarea>
+
+          <label for="taskUrl">Target URL</label>
+          <input id="taskUrl" name="target_url" type="url" maxlength="1000"
+            placeholder="https://t.me/yourgroup">
+
+          <label for="memberLimit">Member limit</label>
+          <input id="memberLimit" name="member_limit" type="number"
+            min="1" step="1" required>
+
+          <label for="paymentTxid">Payment transaction ID</label>
+          <input id="paymentTxid" name="payment_txid" maxlength="200"
+            placeholder="Enter payment TX ID">
+
+          <p id="addTaskMessage" role="status"></p>
+
+          <button class="primary" type="submit">
+            Submit Task Request
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ADS -->
+    <section id="ads" class="page hidden">
+      <h2>Watch Ads &amp; Earn</h2>
+
+      <div class="info-card">
+        <h3>Ad Rewards</h3>
+        <p>Planned reward: $0.05 per verified ad.</p>
+        <p>Planned limit: 100 ads per day.</p>
+        <p id="adsStatus">
+          AdsGram integration will be added after the other features are completed.
+        </p>
+        <button class="primary" type="button" disabled>
+          Ads Coming Soon
+        </button>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile" class="page hidden">
+      <h2>My Profile</h2>
+
+      <div class="info-card">
+        <p><strong>Telegram user:</strong> <span id="profileUsername">Not verified</span></p>
+        <p><strong>Telegram ID:</strong> <span id="profileTelegramId">—</span></p>
+      </div>
+
+      <form id="walletForm">
+        <div class="info-card">
+          <h3>Wallet Settings</h3>
+          <p>Enter your payout details carefully.</p>
+
+          <label for="usdtAddress">USDT wallet address (BEP20)</label>
+          <input
+            id="usdtAddress"
+            name="usdt_address"
+            type="text"
+            maxlength="100"
+            autocomplete="off"
+            placeholder="0x..."
+          >
+
+          <label for="binancePayId">Binance Pay ID</label>
+          <input
+            id="binancePayId"
+            name="binance_pay_id"
+            type="text"
+            maxlength="100"
+            autocomplete="off"
+            placeholder="Enter Binance Pay ID"
+          >
+
+          <p id="walletSettingsMessage" role="status"></p>
+
+          <button id="saveWalletButton" class="primary" type="submit">
+            Save Wallet Details
+          </button>
+        </div>
+      </form>
+
+      <div class="info-card">
+        <h3>Withdrawals</h3>
+        <p>Minimum withdrawal: $2.00</p>
+        <p id="withdrawBalance">Available balance: Loading...</p>
+        <p id="withdrawStatus">
+          Withdrawal requests are not connected yet.
+        </p>
+        <p>Only request withdrawals through the verified TaskFlow system.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- BOTTOM NAVIGATION -->
+  <nav class="bottom" aria-label="Main navigation">
+    <button type="button" onclick="showPage('home', this)">Home</button>
+    <button type="button" onclick="showPage('referral', this)">Referral</button>
+    <button type="button" onclick="showPage('tasks', this)">Tasks</button>
+    <button type="button" onclick="showPage('ads', this)">Ads</button>
+    <button type="button" onclick="showPage('profile', this)">Profile</button>
+  </nav>
+
+  <script src="app.js"></script>
 </body>
 </html>
